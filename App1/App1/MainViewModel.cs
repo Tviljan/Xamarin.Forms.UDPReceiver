@@ -25,8 +25,8 @@ namespace App1
 
 
             Messages = new ObservableCollection<UDPMessage>();
-            
-            Task.Run(()=>receiver.StartListeningAsync(listenPort));
+
+            Task.Run(() => Init().Wait());
 
         }
 
@@ -41,7 +41,16 @@ namespace App1
 
         public async Task Init()
         {
-          
+            try
+            {
+                await receiver.StartListeningAsync(listenPort);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
+
         }
     }
 
